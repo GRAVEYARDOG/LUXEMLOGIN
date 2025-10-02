@@ -1,0 +1,1683 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Luxembourg Embassy Portal</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Ultra&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --lux-blue: #68A4F1;
+            --lux-white: #FCFCFC;
+            --lux-red: #FA576B;
+            --text-dark: #333333;
+            --text-light: #FCFCFC;
+            --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            --shadow-lg: 0 10px 25px rgba(0, 0, 0, 0.1);
+            --radius: 12px;
+            --input-color: #68A4F1;
+            --success: #4CAF50;
+            --warning: #FF9800;
+            
+            /* New color variables for dashboard */
+            --teal-900: #134e4a;
+            --teal-accent-400: #2dd4bf;
+            --blue-gray-100: #f1f5f9;
+            --deep-purple-accent-400: #7c3aed;
+            --indigo-50: #eef2ff;
+
+            /* Timeline variables */
+            --color1: #9251ac;
+            --color2: #f6a4ec;
+            --color3: #87bbfe;
+            --color4: #555ac0;
+            --color5: #24b47e;
+            --color6: #aff1b6;
+        }
+
+        .dark-mode {
+            --lux-blue: #68A4F1;
+            --lux-white: #1E1E1E;
+            --lux-red: #E8435C;
+            --text-dark: #F0F0F0;
+            --text-light: #F0F0F0;
+            --shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+            --shadow-lg: 0 10px 25px rgba(0, 0, 0, 0.3);
+            --input-color: #8BB8F7;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        body {
+            background-color: var(--lux-white);
+            color: var(--text-dark);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* Loader Styles */
+        #loader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: var(--lux-white);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+        }
+
+        .container {
+            position: absolute;
+            width: 200px;
+            height: 200px;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            margin: auto;
+        }
+
+        .item {
+            width: 100px;
+            height: 100px;
+            position: absolute;
+        }
+
+        .item-1 {
+            background-color: #FA5667;
+            top: 0;
+            left: 0;
+            z-index: 1;
+            animation: item-1_move 1.8s cubic-bezier(.6,.01,.4,1) infinite;
+        }
+
+        .item-2 {
+            background-color: #7A45E5;
+            top: 0;
+            right: 0;
+            animation: item-2_move 1.8s cubic-bezier(.6,.01,.4,1) infinite;
+        }
+
+        .item-3 {
+            background-color: #1B91F7;
+            bottom: 0;
+            right: 0;
+            z-index: 1;
+            animation: item-3_move 1.8s cubic-bezier(.6,.01,.4,1) infinite;
+        }
+
+        .item-4 {
+            background-color: #FAC24C;
+            bottom: 0;
+            left: 0;
+            animation: item-4_move 1.8s cubic-bezier(.6,.01,.4,1) infinite;
+        }
+
+        @keyframes item-1_move {
+            0%, 100% {transform: translate(0, 0)} 
+            25% {transform: translate(0, 100px)} 
+            50% {transform: translate(100px, 100px)} 
+            75% {transform: translate(100px, 0)} 
+        }
+
+        @keyframes item-2_move {
+            0%, 100% {transform: translate(0, 0)} 
+            25% {transform: translate(-100px, 0)} 
+            50% {transform: translate(-100px, 100px)} 
+            75% {transform: translate(0, 100px)} 
+        }
+
+        @keyframes item-3_move {
+            0%, 100% {transform: translate(0, 0)} 
+            25% {transform: translate(0, -100px)} 
+            50% {transform: translate(-100px, -100px)} 
+            75% {transform: translate(-100px, 0)} 
+        }
+
+        @keyframes item-4_move {
+            0%, 100% {transform: translate(0, 0)} 
+            25% {transform: translate(100px, 0)} 
+            50% {transform: translate(100px, -100px)} 
+            75% {transform: translate(0, -100px)} 
+        }
+
+        /* Luxembourg Animation Styles */
+        .logo-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .bizzy {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            margin-bottom: 5px;
+        }
+
+        @keyframes fontGrow {
+            0% {
+                transform: scaleY(1);
+            }
+            50% {
+                transform: scaleY(2);
+            }
+            100% {
+                transform: scaleY(1);
+            }
+        }
+
+        .bizzy-letters {
+            animation-name: fontGrow;
+            animation-duration: 2s;
+            animation-iteration-count: infinite;
+            transform-origin: top;
+            transition-timing-function: ease-in-out;
+            font-family: "Ultra", serif;
+            font-size: 2.2rem;
+            margin: 0;
+            line-height: 1;
+        }
+
+        .letter-l {
+            color: #fe96b7;
+        }
+
+        .letter-u {
+            color: #b8d953;
+            animation-delay: 0.2s;
+        }
+
+        .letter-x {
+            color: #bb86e9;
+            animation-delay: 0.4s;
+        }
+
+        .letter-e {
+            color: #b2b2eb;
+            animation-delay: 0.6s;
+        }
+
+        .letter-m {
+            color: #529a91;
+            animation-delay: 0.8s;
+        }
+
+        .letter-b {
+            color: #fe96b7;
+            animation-delay: 1s;
+        }
+
+        .letter-o {
+            color: #b8d953;
+            animation-delay: 1.2s;
+        }
+
+        .letter-r {
+            color: #bb86e9;
+            animation-delay: 1.4s;
+        }
+
+        .letter-g {
+            color: #b2b2eb;
+            animation-delay: 1.6s;
+        }
+
+        /* Logo Styles */
+        .embassy-logo {
+            height: 80px;
+            margin-bottom: 15px;
+        }
+
+        /* Animated Title Styles for Login */
+        @import url('https://fonts.googleapis.com/css?family=Lato:300,400|Poppins:300,400,800&display=swap');
+
+        .animated-container {
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .animated-box {
+            width: 250px;
+            height: 200px;
+            position: relative;
+            display: flex;
+            justify-content: center;
+            flex-direction: column;
+        }
+
+        .animated-title {
+            width: 100%;
+            position: relative;
+            display: flex;
+            align-items: center;
+            height: 50px;
+        }
+
+        .animated-block {
+            width: 0%;
+            height: inherit;
+            background: var(--lux-blue);
+            position: absolute;
+            animation: mainBlock 2s cubic-bezier(.74, .06, .4, .92) forwards;
+            display: flex;
+        }
+
+        .animated-title h1 {
+            font-family: 'Poppins';
+            color: var(--lux-blue);
+            font-size: 28px;
+            animation: mainFadeIn 2s forwards;
+            animation-delay: 1.6s;
+            opacity: 0;
+            display: flex;
+            align-items: baseline;
+            position: relative;
+        }
+
+        .animated-title h1 span {
+            width:0px;
+            height: 0px;
+            border-radius: 50%;
+            background: var(--lux-red);
+            animation: popIn 0.8s cubic-bezier(.74, .06, .4, .92) forwards;
+            animation-delay: 2s;
+            margin-left: 5px;
+            margin-top: -10px;
+            position: absolute;
+            bottom: 13px;
+            right: -12px;
+        }
+
+        .animated-role {
+            width: 100%;
+            position: relative;
+            display: flex;
+            align-items: center;
+            height: 30px;
+            margin-top: -10px;
+        }
+
+        .animated-role-block {
+            width: 0%;
+            height: inherit;
+            background: var(--lux-red);
+            position: absolute;
+            animation: secBlock 2s cubic-bezier(.74, .06, .4, .92) forwards;
+            animation-delay: 2s;
+            display: flex;
+        }
+
+        .animated-role p {
+            animation: secFadeIn 2s forwards;
+            animation-delay: 3.2s;
+            opacity: 0;
+            font-weight: 400;
+            font-family: 'Lato';
+            color: var(--lux-red);
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 5px;
+        }
+
+        @keyframes mainBlock {
+            0% {
+                width: 0%;
+                left: 0;
+            }
+            50% {
+                width: 100%;
+                left: 0;
+            }
+            100% {
+                width: 0;
+                left: 100%;
+            }
+        }
+
+        @keyframes secBlock {
+            0% {
+                width: 0%;
+                left: 0;
+            }
+            50% {
+                width: 100%;
+                left: 0;
+            }
+            100% {
+                width: 0;
+                left: 100%;
+            }
+        }
+
+        @keyframes mainFadeIn {
+            0% {
+                opacity: 0;
+            }
+            100% {
+                opacity: 1;
+            }
+        }
+
+        @keyframes popIn {
+            0% {
+                width: 0px;
+                height: 0px;
+                background: var(--lux-red);
+                border: 0px solid #ddd;
+                opacity: 0;
+            }
+            50% {
+                width: 10px;
+                height: 10px;
+                background: var(--lux-red);
+                opacity: 1;
+                bottom: 45px;
+            }
+            65% {
+                width: 7px;
+                height: 7px;
+                bottom: 0px;
+                width: 15px;
+            }
+            80% {
+                width: 10px;
+                height: 10px;
+                bottom: 20px;
+            }
+            100% {
+                width: 7px;
+                height: 7px;
+                background: var(--lux-red);
+                border: 0px solid #222;
+                bottom: 13px;
+            }
+        }
+
+        @keyframes secFadeIn {
+            0% {
+                opacity: 0;
+            }
+            100% {
+                opacity: 1;
+            }
+        }
+
+        /* Login Page Styles */
+        .login-container {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(rgba(104, 164, 241, 0.7), rgba(252, 252, 252, 0.7)), 
+                        url('https://thumbs.dreamstime.com/b/minimalist-winter-doodle-features-distant-snow-covered-mountains-elegant-pine-trees-peaceful-snowy-landscape-capped-351642504.jpg') no-repeat center center fixed;
+            background-size: cover;
+            padding: 20px;
+            position: relative;
+            display: none;
+        }
+
+        .login-card {
+            background-color: var(--lux-white);
+            padding: 30px;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow-lg);
+            width: 100%;
+            max-width: 450px;
+            margin-bottom: 30px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+            position: relative;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: var(--input-color);
+        }
+
+        .input-with-icon {
+            position: relative;
+        }
+
+        .input-icon {
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--input-color);
+            font-size: 18px;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 12px 15px 12px 45px;
+            border: 1px solid #ddd;
+            border-radius: var(--radius);
+            font-size: 16px;
+            transition: border-color 0.3s;
+            color: var(--text-dark);
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: var(--lux-blue);
+            box-shadow: 0 0 0 3px rgba(104, 164, 241, 0.2);
+        }
+
+        .form-control.error {
+            border-color: var(--lux-red);
+        }
+
+        .error-message {
+            color: var(--lux-red);
+            font-size: 14px;
+            margin-top: 5px;
+            display: none;
+        }
+
+        .error-message.show {
+            display: block;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 12px 24px;
+            background-color: var(--lux-blue);
+            color: var(--lux-white);
+            border: none;
+            border-radius: var(--radius);
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-align: center;
+            width: 100%;
+        }
+
+        .btn:hover {
+            background-color: #5a94e0;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        .btn-primary {
+            background-color: var(--lux-red);
+        }
+
+        .btn-primary:hover {
+            background-color: #E8435C;
+        }
+
+        .loading-spinner {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            border-top-color: var(--lux-white);
+            animation: spin 1s ease-in-out infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        /* Minimal Footer for Login Page */
+        .login-footer {
+            text-align: center;
+            color: var(--text-dark);
+            padding: 20px;
+            width: 100%;
+            max-width: 450px;
+            font-size: 14px;
+            background-color: rgba(255, 255, 255, 0.8);
+            border-radius: var(--radius);
+        }
+
+        .login-footer p {
+            margin-bottom: 8px;
+        }
+
+        .login-footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 10px;
+        }
+
+        .login-footer-links a {
+            color: var(--text-dark);
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .login-footer-links a:hover {
+            color: var(--lux-blue);
+        }
+
+        /* Dashboard Styles */
+        .home-container {
+            display: none;
+            min-height: 100vh;
+        }
+
+        .header {
+            background: linear-gradient(135deg, var(--lux-blue) 0%, #5a94e0 100%);
+            color: var(--lux-white);
+            padding: 20px 0;
+            box-shadow: var(--shadow);
+        }
+
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        /* Updated Header Logo Container for Vertical Layout */
+        .header-logo-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .header-logo {
+            height: 60px;
+        }
+
+        .header-logo-container .bizzy {
+            flex-direction: row;
+            gap: 2px;
+        }
+
+        .header-logo-container .bizzy-letters {
+            font-size: 1.5rem;
+        }
+
+        /* Dashboard Styles */
+        .dashboard-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 30px 20px;
+        }
+
+        /* New Dashboard Section Styles */
+        .features-section {
+            padding: 4rem 1rem;
+            margin: 0 auto;
+            max-width: 1200px;
+        }
+
+        .section-header {
+            max-width: 36rem;
+            margin: 0 auto 2.5rem;
+            text-align: center;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            margin-bottom: 1rem;
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: var(--teal-900);
+            background-color: var(--teal-accent-400);
+            border-radius: 9999px;
+        }
+
+        .section-title {
+            max-width: 32rem;
+            margin: 0 auto 1.5rem;
+            font-size: 1.875rem;
+            font-weight: 700;
+            line-height: 1.2;
+            letter-spacing: -0.025em;
+            color: var(--text-dark);
+            position: relative;
+        }
+
+        @media (min-width: 640px) {
+            .section-title {
+                font-size: 2.25rem;
+            }
+        }
+
+        .title-decoration {
+            position: relative;
+            display: inline-block;
+        }
+
+        .title-decoration svg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            z-index: 0;
+            width: 8rem;
+            margin-top: -2rem;
+            margin-left: -5rem;
+            color: var(--blue-gray-100);
+            display: none;
+        }
+
+        @media (min-width: 640px) {
+            .title-decoration svg {
+                display: block;
+            }
+        }
+
+        @media (min-width: 1024px) {
+            .title-decoration svg {
+                width: 8rem;
+                margin-left: -7rem;
+                margin-top: -2.5rem;
+            }
+        }
+
+        .title-decoration .relative {
+            position: relative;
+        }
+
+        .section-description {
+            font-size: 1rem;
+            line-height: 1.5;
+            color: var(--text-dark);
+        }
+
+        @media (min-width: 768px) {
+            .section-description {
+                font-size: 1.125rem;
+            }
+        }
+
+        .features-grid {
+            display: grid;
+            gap: 1rem;
+            grid-template-columns: 1fr;
+        }
+
+        @media (min-width: 640px) {
+            .features-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (min-width: 1024px) {
+            .features-grid {
+                grid-template-columns: repeat(4, 1fr);
+            }
+        }
+
+        .feature-card {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            padding: 1.25rem;
+            border: 1px solid #e5e7eb;
+            border-radius: 0.5rem;
+            box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+            background-color: var(--lux-white);
+        }
+
+        .feature-icon {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 4rem;
+            height: 4rem;
+            margin-bottom: 1rem;
+            border-radius: 9999px;
+            background-color: var(--indigo-50);
+        }
+
+        .feature-icon svg {
+            width: 3rem;
+            height: 3rem;
+            stroke: var(--deep-purple-accent-400);
+        }
+
+        .feature-title {
+            margin-bottom: 0.5rem;
+            font-size: 1rem;
+            font-weight: 600;
+            line-height: 1.25;
+            color: var(--text-dark);
+        }
+
+        .feature-description {
+            margin-bottom: 0.75rem;
+            font-size: 0.875rem;
+            color: var(--text-dark);
+        }
+
+        .feature-link {
+            display: inline-flex;
+            align-items: center;
+            font-weight: 600;
+            color: var(--deep-purple-accent-400);
+            transition: color 0.2s;
+        }
+
+        .feature-link:hover {
+            color: #5b21b6;
+        }
+
+        .applicant-info {
+            margin-bottom: 1rem;
+        }
+
+        .applicant-name {
+            font-size: 1.25rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            color: var(--lux-blue);
+        }
+
+        .applicant-detail {
+            display: flex;
+            margin-bottom: 0.25rem;
+        }
+
+        .detail-label {
+            font-weight: 600;
+            width: 100px;
+        }
+
+        /* Updated View Arrival Date Button */
+        .arrival-btn {
+            display: inline-block;
+            padding: 12px 24px;
+            background-color: #4da6ff;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-size: 16px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-align: center;
+            text-decoration: none;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .arrival-btn:hover {
+            background-color: #3385d6;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        /* Timeline Section */
+        .timeline-section {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        .timeline-heading {
+            margin: 50px 0 30px;
+            text-align: center;
+            font-size: 2rem;
+            font-weight: 100;
+            color: var(--text-dark);
+        }
+
+        /* Timeline Styles */
+        .timeline {
+            display: flex;
+            flex-direction: column;
+            margin: 20px auto;
+            position: relative;
+        }
+
+        .timeline__event {
+            margin-bottom: 20px;
+            position: relative;
+            display: flex;
+            margin: 20px 0;
+            border-radius: 6px;
+            align-self: center;
+            width: 50vw;
+        }
+
+        .timeline__event:nth-child(2n + 1) {
+            flex-direction: row-reverse;
+        }
+
+        .timeline__event:nth-child(2n + 1) .timeline__event__date {
+            border-radius: 0 6px 6px 0;
+        }
+
+        .timeline__event:nth-child(2n + 1) .timeline__event__content {
+            border-radius: 6px 0 0 6px;
+        }
+
+        .timeline__event__title {
+            font-size: 1.2rem;
+            line-height: 1.4;
+            text-transform: uppercase;
+            font-weight: 600;
+            color: var(--color1);
+            letter-spacing: 1.5px;
+        }
+
+        .timeline__event__content {
+            padding: 20px;
+            box-shadow: 0 30px 60px -12px rgba(50, 50, 93, 0.25),
+                0 18px 36px -18px rgba(0, 0, 0, 0.3),
+                0 -12px 36px -8px rgba(0, 0, 0, 0.025);
+            background: #fff;
+            width: calc(40vw - 84px);
+            border-radius: 0 6px 6px 0;
+        }
+
+        .timeline__event__date {
+            color: var(--color2);
+            font-size: 1.5rem;
+            font-weight: 600;
+            background: var(--color1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            white-space: nowrap;
+            padding: 0 20px;
+            border-radius: 6px 0 0 6px;
+        }
+
+        .timeline__event__icon {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--color1);
+            padding: 20px;
+            align-self: center;
+            margin: 0 20px;
+            background: var(--color2);
+            border-radius: 100%;
+            width: 40px;
+            box-shadow: 0 30px 60px -12px rgba(50, 50, 93, 0.25),
+                0 18px 36px -18px rgba(0, 0, 0, 0.3),
+                0 -12px 36px -8px rgba(0, 0, 0, 0.025);
+            padding: 40px;
+            height: 40px;
+            position: relative;
+        }
+
+        .timeline__event__icon i {
+            font-size: 32px;
+        }
+
+        .timeline__event__description {
+            flex-basis: 60%;
+        }
+
+        .timeline__event--type2 .timeline__event__date {
+            color: var(--color3);
+            background: var(--color4);
+        }
+
+        .timeline__event--type2 .timeline__event__icon {
+            background: var(--color3);
+            color: var(--color4);
+        }
+
+        .timeline__event--type2 .timeline__event__title {
+            color: var(--color4);
+        }
+
+        .timeline__event--type3 .timeline__event__date {
+            color: var(--color6);
+            background-color: var(--color5);
+        }
+
+        .timeline__event--type3 .timeline__event__icon {
+            background: var(--color6);
+            color: var(--color5);
+        }
+
+        .timeline__event--type3 .timeline__event__title {
+            color: var(--color5);
+        }
+
+        /* Animation classes */
+        .animated {
+            animation-duration: 1s;
+            animation-fill-mode: both;
+        }
+
+        .fadeInUp {
+            animation-name: fadeInUp;
+        }
+
+        .delay-1s {
+            animation-delay: 0.5s;
+        }
+
+        .delay-2s {
+            animation-delay: 1s;
+        }
+
+        .delay-3s {
+            animation-delay: 1.5s;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translate3d(0, 40px, 0);
+            }
+            to {
+                opacity: 1;
+                transform: translate3d(0, 0, 0);
+            }
+        }
+
+        /* Footer Styles */
+        .footer {
+            background-color: #1E3C65; /* Updated footer color */
+            color: var(--lux-white);
+            padding: 30px 0 15px;
+            margin-top: 60px;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+        }
+
+        .footer-section h3 {
+            margin-bottom: 15px;
+            font-size: 18px;
+        }
+
+        .footer-links {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .footer-links a {
+            color: var(--lux-white);
+            margin-bottom: 10px;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+        }
+
+        .footer-links a i {
+            margin-right: 8px;
+        }
+
+        .footer-links a:hover {
+            text-decoration: underline;
+        }
+
+        .copyright {
+            text-align: center;
+            padding-top: 20px;
+            margin-top: 30px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .copyright p {
+            font-size: 14px;
+        }
+
+        /* Modal Styles */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(0, 0, 0, 0.8);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            padding: 20px;
+            display: none;
+        }
+
+        .modal-content {
+            background-color: var(--lux-white);
+            border-radius: var(--radius);
+            max-width: 800px;
+            width: 100%;
+            max-height: 90vh;
+            overflow: auto;
+            position: relative;
+        }
+
+        .modal-header {
+            padding: 20px;
+            border-bottom: 1px solid #eee;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .modal-header h2 {
+            color: var(--text-dark);
+        }
+
+        .close-btn {
+            background: none;
+            border: none;
+            font-size: 24px;
+            cursor: pointer;
+            color: var(--text-dark);
+        }
+
+        .modal-body {
+            padding: 20px;
+            text-align: center;
+        }
+
+        .modal-image {
+            max-width: 100%;
+            height: auto;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+        }
+
+        /* Theme Toggle */
+        .theme-toggle {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background-color: var(--lux-blue);
+            color: var(--lux-white);
+            border: none;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            box-shadow: var(--shadow);
+            z-index: 1000;
+            font-size: 20px;
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 786px) {
+            .timeline__event {
+                flex-direction: column;
+                align-self: center;
+                width: 90%;
+            }
+
+            .timeline__event__content {
+                width: 100%;
+            }
+
+            /* Fixed: Timeline icons remain circular on mobile */
+            .timeline__event__icon {
+                border-radius: 50%;
+                width: 80px;
+                height: 80px;
+                margin: 0 auto 20px;
+                padding: 20px;
+                box-shadow: 0 30px 60px -12px rgba(50, 50, 93, 0.25),
+                    0 18px 36px -18px rgba(0, 0, 0, 0.3),
+                    0 -12px 36px -8px rgba(0, 0, 0, 0.025);
+            }
+
+            .timeline__event__date {
+                border-radius: 0;
+                padding: 20px;
+            }
+
+            .timeline__event:nth-child(2n + 1) {
+                flex-direction: column;
+                align-self: center;
+            }
+
+            .timeline__event:nth-child(2n + 1) .timeline__event__date {
+                border-radius: 0;
+                padding: 20px;
+            }
+
+            .timeline__event:nth-child(2n + 1) .timeline__event__icon {
+                border-radius: 50%;
+                margin: 0 auto 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Loader -->
+    <div id="loader">
+        <div class="container">
+            <div class="item item-1"></div>
+            <div class="item item-2"></div>
+            <div class="item item-3"></div>
+            <div class="item item-4"></div>
+        </div>
+    </div>
+
+    <!-- Theme Toggle -->
+    <button class="theme-toggle" id="themeToggle">
+        <i class="fas fa-moon" id="themeIcon"></i>
+    </button>
+
+    <!-- Login Page -->
+    <div class="login-container" id="loginPage">
+        <div class="login-card">
+            <!-- Logo -->
+            <div class="logo-container">
+                <img src="images/logo12.png" alt="Luxembourg Embassy Logo" class="embassy-logo">
+                <div class="bizzy">
+                    <p class="bizzy-letters letter-l">L</p> 
+                    <p class="bizzy-letters letter-u">U</p>
+                    <p class="bizzy-letters letter-x">X</p>
+                    <p class="bizzy-letters letter-e">E</p>
+                    <p class="bizzy-letters letter-m">M</p>
+                    <p class="bizzy-letters letter-b">B</p>
+                    <p class="bizzy-letters letter-o">O</p>
+                    <p class="bizzy-letters letter-u">U</p>
+                    <p class="bizzy-letters letter-r">R</p>
+                    <p class="bizzy-letters letter-g">G</p>
+                </div>
+            </div>
+            
+            <!-- Animated Title -->
+            <div class="animated-container">
+                <div class="animated-box">
+                    <div class="animated-title">
+                        <div class="animated-block"></div>
+                        <h1>Welcome to<span></span></h1>
+                    </div>
+                    <div class="animated-role">
+                        <div class="animated-role-block"></div>
+                        <p>Luxembourg Embassy WebApp</p>
+                    </div>
+                </div>
+            </div>
+            
+            <form id="loginForm">
+                <div class="form-group">
+                    <label for="username">Username</label>
+                    <div class="input-with-icon">
+                        <i class="fas fa-user input-icon"></i>
+                        <input type="text" id="username" class="form-control" placeholder="Enter your username">
+                    </div>
+                    <div class="error-message" id="usernameError">Please enter a valid username</div>
+                </div>
+                <div class="form-group">
+                    <label for="passport">Passport ID</label>
+                    <div class="input-with-icon">
+                        <i class="fas fa-passport input-icon"></i>
+                        <input type="text" id="passport" class="form-control" placeholder="Enter your passport ID">
+                    </div>
+                    <div class="error-message" id="passportError">Please enter a valid passport ID</div>
+                </div>
+                <button type="submit" class="btn btn-primary" id="loginBtn">
+                    <span id="btnText">Login</span>
+                    <div class="loading-spinner" id="loadingSpinner" style="display: none;"></div>
+                </button>
+            </form>
+        </div>
+        
+        <!-- Minimal Footer for Login Page -->
+        <div class="login-footer">
+            <p>© 2023 Government of Luxembourg. All rights reserved.</p>
+            <p>Luxembourg, Europe</p>
+            <div class="login-footer-links">
+                <a href="#">Privacy Policy</a>
+                <a href="#">Terms of Use</a>
+                <a href="#">Contact</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Dashboard -->
+    <div class="home-container" id="homePage">
+        <header class="header">
+            <div class="header-content">
+                <div class="header-logo-container">
+                    <img src="images/logo12.png" alt="Luxembourg Embassy Logo" class="header-logo">
+                    <div class="bizzy">
+                        <p class="bizzy-letters letter-l">L</p> 
+                        <p class="bizzy-letters letter-u">U</p>
+                        <p class="bizzy-letters letter-x">X</p>
+                        <p class="bizzy-letters letter-e">E</p>
+                        <p class="bizzy-letters letter-m">M</p>
+                        <p class="bizzy-letters letter-b">B</p>
+                        <p class="bizzy-letters letter-o">O</p>
+                        <p class="bizzy-letters letter-u">U</p>
+                        <p class="bizzy-letters letter-r">R</p>
+                        <p class="bizzy-letters letter-g">G</p>
+                    </div>
+                </div>
+                <button class="btn" id="logoutBtn" style="width: auto; padding: 8px 16px;">
+                    <i class="fas fa-sign-out-alt"></i> Logout
+                </button>
+            </div>
+        </header>
+
+        <!-- New Dashboard Section -->
+        <div class="features-section">
+            <div class="section-header">
+                <div>
+                    <p class="badge">Visa Application</p>
+                </div>
+                <h2 class="section-title">
+                    <span class="title-decoration">
+                        <svg viewBox="0 0 52 24" fill="currentColor">
+                            <defs>
+                                <pattern id="18302e52-9e2a-4c8e-9550-0cbb21b38e55" x="0" y="0" width=".135" height=".30">
+                                    <circle cx="1" cy="1" r=".7"></circle>
+                                </pattern>
+                            </defs>
+                            <rect fill="url(#18302e52-9e2a-4c8e-9550-0cbb21b38e55)" width="52" height="24"></rect>
+                        </svg>
+                        <span class="relative">Welcome</span>
+                    </span>
+                    <span style="color: #4da6ff;">ANTENEH MENO SODENO</span> to your Visa Application Dashboard
+                </h2>
+                <p class="section-description">
+                    Welcome to your visa application portal. Here you can track your application status, view important documents, and get updates on your visa process.
+                </p>
+            </div>
+            <div class="features-grid">
+                <!-- Applicant Information Card -->
+                <div class="feature-card">
+                    <div>
+                        <div class="feature-icon">
+                            <svg class="w-12 h-12 text-deep-purple-accent-400" stroke="currentColor" viewBox="0 0 52 52">
+                                <polygon stroke-width="3" stroke-linecap="round" stroke-linejoin="round" fill="none" points="29 13 14 29 25 29 23 39 38 23 27 23"></polygon>
+                            </svg>
+                        </div>
+                        <div class="applicant-info">
+                            <div class="applicant-name">ANTENEH MENO SODENO</div>
+                            <div class="applicant-detail">
+                                <span class="detail-label">Passport ID:</span>
+                                <span class="detail-value">EP7680203</span>
+                            </div>
+                            <div class="applicant-detail">
+                                <span class="detail-label">Status:</span>
+                                <span class="detail-value" style="color: var(--success); font-weight: 600;">Approved</span>
+                            </div>
+                        </div>
+                        <h6 class="feature-title">Applicant Information</h6>
+                        <p class="feature-description">
+                            Your visa application has been approved. You can now view your arrival date confirmation.
+                        </p>
+                    </div>
+                    <a href="#" class="arrival-btn" id="viewArrivalBtn">View Arrival Date</a>
+                </div>
+                
+                <div class="feature-card">
+                    <div>
+                        <div class="feature-icon">
+                            <svg class="w-12 h-12 text-deep-purple-accent-400" stroke="currentColor" viewBox="0 0 52 52">
+                                <polygon stroke-width="3" stroke-linecap="round" stroke-linejoin="round" fill="none" points="29 13 14 29 25 29 23 39 38 23 27 23"></polygon>
+                            </svg>
+                        </div>
+                        <h6 class="feature-title">Application Status</h6>
+                        <p class="feature-description">
+                            Your visa application status is currently approved. All required documents have been processed.
+                        </p>
+                    </div>
+                    <a href="/" class="feature-link">Learn more</a>
+                </div>
+                <div class="feature-card">
+                    <div>
+                        <div class="feature-icon">
+                            <svg class="w-12 h-12 text-deep-purple-accent-400" stroke="currentColor" viewBox="0 0 52 52">
+                                <polygon stroke-width="3" stroke-linecap="round" stroke-linejoin="round" fill="none" points="29 13 14 29 25 29 23 39 38 23 27 23"></polygon>
+                            </svg>
+                        </div>
+                        <h6 class="feature-title">Next Steps</h6>
+                        <p class="feature-description">
+                            After receiving your visa, ensure your passport is valid for at least 3 months beyond your intended stay.
+                        </p>
+                    </div>
+                    <a href="/" class="feature-link">Learn more</a>
+                </div>
+                <div class="feature-card">
+                    <div>
+                        <div class="feature-icon">
+                            <svg class="w-12 h-12 text-deep-purple-accent-400" stroke="currentColor" viewBox="0 0 52 52">
+                                <polygon stroke-width="3" stroke-linecap="round" stroke-linejoin="round" fill="none" points="29 13 14 29 25 29 23 39 38 23 27 23"></polygon>
+                            </svg>
+                        </div>
+                        <h6 class="feature-title">Embassy Contact</h6>
+                        <p class="feature-description">
+                            For any questions, contact the embassy at consular.services@luxembourg-embassy.lu
+                        </p>
+                    </div>
+                    <a href="/" class="feature-link">Learn more</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Timeline Section -->
+        <div class="timeline-section">
+            <h2 class="timeline-heading">Luxembourg Embassy Facts & Information</h2>
+            <div class="timeline"> 
+                <div class="timeline__event animated fadeInUp delay-3s timeline__event--type1">
+                    <div class="timeline__event__icon">
+                        <i class="fas fa-landmark"></i>
+                    </div>
+                    <div class="timeline__event__date">
+                        1945
+                    </div>
+                    <div class="timeline__event__content">
+                        <div class="timeline__event__title">
+                            Embassy Establishment
+                        </div>
+                        <div class="timeline__event__description">
+                            <p>The Embassy of Luxembourg was established shortly after World War II, strengthening diplomatic relations and providing consular services to Luxembourg citizens abroad and foreign nationals seeking to visit Luxembourg.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="timeline__event animated fadeInUp delay-2s timeline__event--type2">
+                    <div class="timeline__event__icon">
+                        <i class="fas fa-globe-europe"></i>
+                    </div>
+                    <div class="timeline__event__date">
+                        1957
+                    </div>
+                    <div class="timeline__event__content">
+                        <div class="timeline__event__title">
+                            Founding EU Member
+                        </div>
+                        <div class="timeline__event__description">
+                            <p>Luxembourg was one of the six founding members of the European Economic Community, which later became the European Union. The embassy plays a crucial role in representing Luxembourg's interests within the EU framework.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="timeline__event animated fadeInUp delay-1s timeline__event--type3">
+                    <div class="timeline__event__icon">
+                        <i class="fas fa-passport"></i>
+                    </div>
+                    <div class="timeline__event__date">
+                        1985
+                    </div>
+                    <div class="timeline__event__content">
+                        <div class="timeline__event__title">
+                            Schengen Agreement
+                        </div>
+                        <div class="timeline__event__description">
+                            <p>The Schengen Agreement was signed aboard the ship Princess Marie-Astrid on the Moselle River near Schengen, Luxembourg. This landmark agreement abolished border controls between participating European countries.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="timeline__event animated fadeInUp timeline__event--type1">
+                    <div class="timeline__event__icon">
+                        <i class="fas fa-award"></i>
+                    </div>
+                    <div class="timeline__event__date">
+                        2023
+                    </div>
+                    <div class="timeline__event__content">
+                        <div class="timeline__event__title">
+                            Modern Consular Services
+                        </div>
+                        <div class="timeline__event__description">
+                            <p>The embassy now offers fully digital visa applications and online appointment systems, making the process more efficient for applicants while maintaining the highest standards of security and service.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <div class="footer">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>Luxembourg Embassy Services</h3>
+                    <p>Providing consular assistance and diplomatic services to Luxembourg citizens abroad.</p>
+                    <div class="footer-links">
+                        <a href="#"><i class="fas fa-passport"></i> Passport Services</a>
+                        <a href="#"><i class="fas fa-file-contract"></i> Visa Information</a>
+                        <a href="#"><i class="fas fa-hands-helping"></i> Consular Assistance</a>
+                    </div>
+                </div>
+                
+                <div class="footer-section">
+                    <h3>Contact Information</h3>
+                    <div class="contact-info">
+                        <div class="contact-item">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <span>Embassy of Luxembourg, Kirchberg Plateau, Luxembourg</span>
+                        </div>
+                        <div class="contact-item">
+                            <i class="fas fa-envelope"></i>
+                            <span>consular.services@luxembourg-embassy.lu</span>
+                        </div>
+                        <div class="contact-item">
+                            <i class="fas fa-clock"></i>
+                            <span>Mon-Fri: 9:00 AM - 5:00 PM (CET)</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="copyright">
+                <p>© 2023 Government of Luxembourg. All rights reserved. | <i class="fas fa-globe-europe"></i> Luxembourg, Europe</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Visa Arrival Date Modal -->
+    <div class="modal-overlay" id="arrivalModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Visa Arrival Date Confirmation</h2>
+                <button class="close-btn" id="closeArrivalModal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <img src="images/arrival_date_confirmation_letter.jpg" alt="Visa Arrival Date Confirmation Letter" class="modal-image">
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // DOM Elements
+        const loginPage = document.getElementById('loginPage');
+        const homePage = document.getElementById('homePage');
+        const loginForm = document.getElementById('loginForm');
+        const usernameInput = document.getElementById('username');
+        const passportInput = document.getElementById('passport');
+        const usernameError = document.getElementById('usernameError');
+        const passportError = document.getElementById('passportError');
+        const loginBtn = document.getElementById('loginBtn');
+        const btnText = document.getElementById('btnText');
+        const loadingSpinner = document.getElementById('loadingSpinner');
+        const viewArrivalBtn = document.getElementById('viewArrivalBtn');
+        const arrivalModal = document.getElementById('arrivalModal');
+        const closeArrivalModal = document.getElementById('closeArrivalModal');
+        const themeToggle = document.getElementById('themeToggle');
+        const themeIcon = document.getElementById('themeIcon');
+        const logoutBtn = document.getElementById('logoutBtn');
+        const loader = document.getElementById('loader');
+
+        // Valid credentials
+        const validUsername = "ANTENEH MENO SODENO";
+        const validPassport = "EP7680203";
+
+        // Show loader for 15 seconds
+        window.addEventListener('load', function() {
+            setTimeout(function() {
+                loader.style.display = 'none';
+                loginPage.style.display = 'flex';
+                
+                // Add fade-in animation
+                loginPage.style.opacity = '0';
+                setTimeout(() => {
+                    loginPage.style.transition = 'opacity 0.5s ease';
+                    loginPage.style.opacity = '1';
+                }, 100);
+                
+                // Add scale animation to login card
+                const loginCard = document.querySelector('.login-card');
+                loginCard.style.transform = 'scale(0.9)';
+                setTimeout(() => {
+                    loginCard.style.transition = 'transform 0.5s ease';
+                    loginCard.style.transform = 'scale(1)';
+                }, 300);
+            }, 15000); // 15 seconds
+        });
+
+        // Login form submission
+        loginForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const username = usernameInput.value.trim();
+            const passport = passportInput.value.trim();
+            
+            // Reset errors
+            resetErrors();
+            
+            // Validate inputs
+            let isValid = true;
+            
+            if (username !== validUsername) {
+                showError(usernameInput, usernameError);
+                isValid = false;
+            }
+            
+            if (passport !== validPassport) {
+                showError(passportInput, passportError);
+                isValid = false;
+            }
+            
+            if (isValid) {
+                // Show loading state
+                btnText.style.display = 'none';
+                loadingSpinner.style.display = 'inline-block';
+                loginBtn.disabled = true;
+                
+                // Simulate authentication process
+                setTimeout(() => {
+                    // Store login state
+                    localStorage.setItem('isLoggedIn', 'true');
+                    
+                    // Show home page
+                    showHomePage();
+                }, 1500);
+            }
+        });
+
+        // Show home page with animation
+        function showHomePage() {
+            // Add fade-in animation
+            loginPage.style.opacity = '0';
+            setTimeout(() => {
+                loginPage.style.display = 'none';
+                homePage.style.display = 'block';
+                
+                // Trigger animation
+                setTimeout(() => {
+                    homePage.style.opacity = '1';
+                }, 50);
+            }, 500);
+        }
+
+        // Show error state
+        function showError(input, errorElement) {
+            input.classList.add('error');
+            errorElement.classList.add('show');
+        }
+
+        // Reset all errors
+        function resetErrors() {
+            usernameInput.classList.remove('error');
+            passportInput.classList.remove('error');
+            usernameError.classList.remove('show');
+            passportError.classList.remove('show');
+        }
+
+        // View visa arrival date
+        viewArrivalBtn.addEventListener('click', function(e) {
+            e.preventDefault();
+            arrivalModal.style.display = 'flex';
+        });
+
+        // Close modal
+        closeArrivalModal.addEventListener('click', function() {
+            arrivalModal.style.display = 'none';
+        });
+
+        // Close modal when clicking outside
+        arrivalModal.addEventListener('click', function(e) {
+            if (e.target === arrivalModal) {
+                arrivalModal.style.display = 'none';
+            }
+        });
+
+        // Logout functionality
+        logoutBtn.addEventListener('click', function() {
+            // Clear login state
+            localStorage.removeItem('isLoggedIn');
+            
+            // Reset form
+            loginForm.reset();
+            resetErrors();
+            
+            // Show login page
+            homePage.style.display = 'none';
+            loginPage.style.display = 'flex';
+            loginPage.style.opacity = '1';
+            
+            // Reset button state
+            btnText.style.display = 'inline';
+            loadingSpinner.style.display = 'none';
+            loginBtn.disabled = false;
+        });
+
+        // Theme toggle
+        themeToggle.addEventListener('click', function() {
+            document.body.classList.toggle('dark-mode');
+            if (document.body.classList.contains('dark-mode')) {
+                themeIcon.className = 'fas fa-sun';
+            } else {
+                themeIcon.className = 'fas fa-moon';
+            }
+        });
+
+        // Check if user is already logged in
+        document.addEventListener('DOMContentLoaded', function() {
+            // Clear any existing login state to ensure login is required
+            localStorage.removeItem('isLoggedIn');
+            
+            // Initially show loader and hide everything else
+            loader.style.display = 'flex';
+            loginPage.style.display = 'none';
+            homePage.style.display = 'none';
+        });
+    </script>
+</body>
+</html>
